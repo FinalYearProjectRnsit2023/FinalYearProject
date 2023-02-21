@@ -5,10 +5,11 @@ export default class SubjectM {
   public name: string;
   public credit: number;
 
+  constructor(id?: string, name?: string, credit?: string);
   constructor(id: string, name: string, credit: string) {
-    this.id = id;
-    this.name = name;
-    this.credit = parseFloat(credit);
+    this.id = id ?? "";
+    this.name = name ?? "";
+    this.credit = parseFloat(credit) ?? 0;
   }
 
   public static async getAllSubjects(): Promise<SubjectM[] | undefined> {
@@ -20,6 +21,28 @@ export default class SubjectM {
       );
     }
     if (error) {
+      throw error;
+    }
+  }
+
+  public static async addNewSubject(
+    id: string,
+    Name: string,
+    Credit: number
+  ): Promise<SubjectM | undefined> {
+    try {
+      const { data, error } = await supabase
+        .from("Subject")
+        .insert({
+          id,
+          Name,
+          Credit,
+        })
+        .select();
+      if (data) {
+        return new SubjectM(data[0].id, data[0].Name, data[0].Credit);
+      }
+    } catch (error) {
       throw error;
     }
   }

@@ -7,6 +7,27 @@
   --secondary-side-color: #b9e0ff;
 }
 
+.appBody {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  padding: 0 5%;
+}
+
 .box {
   border: 1px solid var(--primary-color);
+}
+
+.hidden_container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(100, 100, 100, 0.7);
+  padding: 0 15%;
+}
+
+.hidden_container > * {
+  background-color: #6c4ab6;
 }

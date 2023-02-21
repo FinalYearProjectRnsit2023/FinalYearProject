@@ -1,41 +1,47 @@
-import { FormEvent, useEffect, useState } from "react";
-import supabase from "../../lib/supabase/dbApi";
+import { FormEvent, useContext, useEffect, useState } from "react";
+import AppContext from "../../components/context/AppContext";
 import SubjectM from "../../Model/SubjectModel";
 
 function Subject() {
   const addSubject = (
-    <div>
-      <form action="POST" onSubmit={(event) => AddSubject(event)}>
-        <table className="table table-striped table-bordered">
-          <tbody>
-            <tr>
-              <th>
-                <label htmlFor="subjectId">Subject Id</label>
-              </th>
-              <td>
-                <input type="text" id="subjectId" />
-              </td>
-            </tr>
-            <tr>
-              <th>
-                <label htmlFor="subjectName">Subject Name</label>
-              </th>
-              <td>
-                <input type="text" id="subjectName" />
-              </td>
-            </tr>
-            <tr>
-              <th>
-                <label htmlFor="subjectCredit">Subject Credit</label>
-              </th>
-              <td>
-                <input type="text" id="subjectCredit" />
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <button className="btn btn-primary">Add Subject</button>
-      </form>
+    <div className="box hidden_container">
+      <div>
+        <form action="POST" onSubmit={(event) => AddSubject(event)}>
+          <table className="table table-striped table-bordered">
+            <tbody>
+              <tr>
+                <th>
+                  <label htmlFor="subjectId">Subject Id</label>
+                </th>
+                <td>
+                  <input type="text" id="subjectId" />
+                </td>
+              </tr>
+              <tr>
+                <th>
+                  <label htmlFor="subjectName">Subject Name</label>
+                </th>
+                <td>
+                  <input type="text" id="subjectName" />
+                </td>
+              </tr>
+              <tr>
+                <th>
+                  <label htmlFor="subjectCredit">Subject Credit</label>
+                </th>
+                <td>
+                  <input type="text" id="subjectCredit" />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <button className="btn btn-primary">Add Subject</button>
+        </form>
+        <hr />
+        <button className="btn btn-primary" onClick={() => toggelForm()}>
+          close
+        </button>
+      </div>
     </div>
   );
 
@@ -48,6 +54,8 @@ function Subject() {
 
   const [subjectData, setSubjectData] = useState([] as SubjectM[]);
   const [showForm, setShowForm] = useState(false);
+
+  const [appData, setAppData] = useContext(AppContext);
 
   useEffect(() => {
     init();
@@ -75,7 +83,7 @@ function Subject() {
           })}
         </tbody>
       </table>
-      <button className="btn btn-primary" onClick={() => showAddSubject()}>
+      <button className="btn btn-primary" onClick={() => toggelForm()}>
         Add New Subject
       </button>
       {showForm && addSubject}
@@ -83,6 +91,8 @@ function Subject() {
   );
 
   async function init() {
+    if (appData) {
+    }
     try {
       const subjects = await SubjectM.getAllSubjects();
       if (subjects) {
@@ -107,14 +117,25 @@ function Subject() {
     );
 
     console.log({ subjectId, subjectName, subjectCredit });
+    try {
+      const subject = await SubjectM.addNewSubject(
+        subjectId,
+        subjectName,
+        subjectCredit
+      );
 
-    const { data, error } = await supabase
-      .from("Subject")
-      .insert({ id: subjectId, Name: subjectName, Credit: subjectCredit })
-      .select();
+      if (subject) {
+        setSubjectData((prev) => [...prev, subject]);
+        (elements as any).subjectId.value = "";
+        (elements as any).subjectName.value = "";
+        (elements as any).subjectCredit.value = "";
+      }
+    } catch (error) {
+      console.error({ error });
+    }
   }
 
-  function showAddSubject() {
+  function toggelForm() {
     setShowForm((prev) => !prev);
   }
 }

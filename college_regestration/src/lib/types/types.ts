@@ -43,6 +43,7 @@ export type NavItem = {
   Url: string;
   Name: string;
   params?: string[];
+  init?: Function;
 };
 
 export type NavItemsInterface = NavItem[];

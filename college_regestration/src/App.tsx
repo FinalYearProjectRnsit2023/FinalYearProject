@@ -22,12 +22,14 @@ function App() {
   return (
     <div>
       <NavBar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/Login" element={<Login />} />
-        <Route path="/Regester" element={<Regester />} />
-        <Route path="/Subject" element={<Subject />} />
-      </Routes>
+      <div className="appBody">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/Login" element={<Login />} />
+          <Route path="/Regester" element={<Regester />} />
+          <Route path="/Subject" element={<Subject />} />
+        </Routes>
+      </div>
     </div>
   );
 
@@ -38,7 +40,13 @@ function App() {
         NavItems: [
           { Url: "/", Name: "Home" },
           { Url: "/Regester", Name: "Regester" },
-          { Url: "/Subject", Name: "Subject" },
+          {
+            Url: "/Subject",
+            Name: "Subject",
+            init: () => {
+              console.log("Calling subject init method");
+            },
+          },
         ],
       };
     });
