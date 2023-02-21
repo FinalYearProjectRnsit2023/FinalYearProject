@@ -1,0 +1,12 @@
+@import "bootstrap/dist/css/bootstrap.min.css";
+
+:root {
+  --primary-color: #6c4ab6;
+  --primary-side-color: #8d72e1;
+  --secondary-color: #8d9eff;
+  --secondary-side-color: #b9e0ff;
+}
+
+.box {
+  border: 1px solid var(--primary-color);
+}
