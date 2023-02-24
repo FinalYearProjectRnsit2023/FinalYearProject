@@ -7,7 +7,7 @@ import { Route, Routes } from "react-router-dom";
 
 import Home from "./pages/Home/Index";
 import Login from "./pages/Login/Index";
-import Regester from "./pages/Regester/Index";
+import Register from "./pages/Register/Index";
 import AppContext from "./components/context/AppContext";
 import Subject from "./pages/Subjects/Index";
 
@@ -26,7 +26,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/Login" element={<Login />} />
-          <Route path="/Regester" element={<Regester />} />
+          <Route path="/Register" element={<Register />} />
           <Route path="/Subject" element={<Subject />} />
         </Routes>
       </div>
@@ -39,7 +39,7 @@ function App() {
         ...prev,
         NavItems: [
           { Url: "/", Name: "Home" },
-          { Url: "/Regester", Name: "Regester" },
+          { Url: "/Register", Name: "Register" },
           {
             Url: "/Subject",
             Name: "Subject",

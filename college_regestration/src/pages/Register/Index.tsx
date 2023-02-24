@@ -7,7 +7,7 @@ import {
   RegestrationType,
 } from "../../lib/types/types";
 
-function Regester() {
+function Register() {
   const [regesterFor, setRegesterFor] = useState(defaultRegestrationType);
 
   const [regestrationError, setRegestrationError] = useState(
@@ -153,4 +153,4 @@ function Regester() {
   }
 }
 
-export default Regester;
+export default Register;
