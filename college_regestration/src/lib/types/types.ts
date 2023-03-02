@@ -47,3 +47,42 @@ export type NavItem = {
 };
 
 export type NavItemsInterface = NavItem[];
+
+export type WeekDayTime = {
+  Day: 1 | 2 | 3 | 4 | 5 | 6 | 7;
+  Time: Date;
+};
+
+export function getWeekDateTime(day: string, time: Date | string): WeekDayTime {
+  if (typeof time == "string") {
+    time = new Date(time);
+  }
+  let dayNum = 0;
+  switch (day) {
+    case "Mon":
+      dayNum = 1;
+      break;
+    case "Tue":
+      dayNum = 2;
+      break;
+    case "Wed":
+      dayNum = 3;
+      break;
+    case "Thu":
+      dayNum = 4;
+      break;
+    case "Fri":
+      dayNum = 5;
+      break;
+    case "Sat":
+      dayNum = 6;
+      break;
+    case "Sun":
+      dayNum = 7;
+      break;
+    default:
+      throw new Error("");
+      break;
+  }
+  return { Day: dayNum as any, Time: time };
+}
