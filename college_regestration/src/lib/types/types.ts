@@ -59,25 +59,25 @@ export function getWeekDateTime(day: string, time: Date | string): WeekDayTime {
   }
   let dayNum = 0;
   switch (day) {
-    case "Mon":
+    case "Monday":
       dayNum = 1;
       break;
-    case "Tue":
+    case "Tuesday":
       dayNum = 2;
       break;
-    case "Wed":
+    case "Wednsday":
       dayNum = 3;
       break;
-    case "Thu":
+    case "Thrusday":
       dayNum = 4;
       break;
-    case "Fri":
+    case "Friday":
       dayNum = 5;
       break;
-    case "Sat":
+    case "Saturday":
       dayNum = 6;
       break;
-    case "Sun":
+    case "Sunday":
       dayNum = 7;
       break;
     default:

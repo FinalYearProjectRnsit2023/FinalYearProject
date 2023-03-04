@@ -10,6 +10,7 @@ import Login from "./pages/Login/Index";
 import Register from "./pages/Register/Index";
 import AppContext from "./components/context/AppContext";
 import Subject from "./pages/Subjects/Index";
+import ClassTT from "./pages/ClassTimeTable/Index";
 
 function App() {
   const [appData, setAppData] = useContext(AppContext);
@@ -28,6 +29,7 @@ function App() {
           <Route path="/Login" element={<Login />} />
           <Route path="/Register" element={<Register />} />
           <Route path="/Subject" element={<Subject />} />
+          <Route path="/TimeTable" element={<ClassTT />} />
         </Routes>
       </div>
     </div>
@@ -40,13 +42,8 @@ function App() {
         NavItems: [
           { Url: "/", Name: "Home" },
           { Url: "/Register", Name: "Register" },
-          {
-            Url: "/Subject",
-            Name: "Subject",
-            init: () => {
-              console.log("Calling subject init method");
-            },
-          },
+          { Url: "/Subject", Name: "Subject" },
+          { Url: "/TimeTable", Name: "TimeTable" },
         ],
       };
     });
