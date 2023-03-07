@@ -4,7 +4,7 @@ import {
   defaultRegertrationError,
   defaultRegestrationType,
   RegertrationError,
-  RegestrationType,
+  Role,
 } from "../../lib/types/types";
 
 function Register() {
@@ -90,7 +90,7 @@ function Register() {
     </div>
   );
 
-  function SetRegesterFor(regester: RegestrationType) {
+  function SetRegesterFor(regester: Role) {
     setRegesterFor(regester);
   }
 
@@ -123,27 +123,42 @@ function Register() {
       return;
     }
 
-    console.log({
-      firstName,
-      middleName,
-      lastName,
-      dob,
-      email,
-      password,
-      passwordCheck,
-    });
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: {
-          firstName,
-          middleName,
-          lastName,
-          dob,
-        },
+    const metadata = {
+      name: {
+        firstName,
+        middleName,
+        lastName,
       },
+      dob,
+    };
+
+    console.log(
+      { metadata },
+      {
+        email,
+        password,
+        passwordCheck,
+      }
+    );
+
+    const { data, error } = await supabase.auth.admin.createUser({
+      email,
+      password,
+      user_metadata: metadata,
     });
+
+    // const { data, error } = await supabase.auth.signUp({
+    //   email,
+    //   password,
+    //   options: {
+    //     data: {
+    //       firstName,
+    //       middleName,
+    //       lastName,
+    //       dob,
+    //     },
+    //   },
+    // });
 
     if (data) {
       history.back();

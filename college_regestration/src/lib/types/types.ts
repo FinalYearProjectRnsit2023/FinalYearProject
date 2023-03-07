@@ -7,28 +7,25 @@ export type AppDataInterface = {
 };
 
 export type UserMetadata = {
+  name: Name;
+  dob: string | Date;
+};
+export interface Name {
   firstName: string;
   middleName?: string;
   lastName: string;
-  dob: string | Date;
-};
+}
+
+export type Role = "Teacher" | "Admin" | "Staff" | "Student";
 
 export const defaultAppData: AppDataInterface = {
   NavItems: [],
 };
 
-export type RegestrationType = "Student" | "Teacher";
-
-export const defaultRegestrationType: RegestrationType = "Student";
+export const defaultRegestrationType: Role = "Student";
 
 export type RegertrationError = {
-  name:
-    | {
-        firstName: string | undefined;
-        middleName: string | undefined;
-        lastName: string | undefined;
-      }
-    | undefined;
+  name: Name | undefined;
   password: string | undefined;
   email: string | undefined;
 };
