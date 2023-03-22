@@ -1,6 +1,6 @@
 import { FormEvent, useContext, useEffect, useState } from "react";
 import AppContext from "../../components/context/AppContext";
-import SubjectM from "../../Model/SubjectModel";
+// import SubjectM from "../../Model/SubjectModel";
 
 function Subject() {
   const addSubject = (

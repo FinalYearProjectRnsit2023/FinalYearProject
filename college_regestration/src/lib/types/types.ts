@@ -1,4 +1,5 @@
 import { Session } from "@supabase/supabase-js";
+import { z } from "zod";
 
 export type AppDataInterface = {
   auth?: Session;
@@ -6,26 +7,26 @@ export type AppDataInterface = {
   NavItems: NavItemsInterface;
 };
 
-export type UserMetadata = {
-  name: Name;
-  dob: string | Date;
-};
-export interface Name {
-  firstName: string;
-  middleName?: string;
-  lastName: string;
-}
+export const MetaDataType = z.object({
+  Name: z.object({
+    FirstName: z.string(),
+    LastName: z.string(),
+    MiddleName: z.string().optional(),
+  }),
+  Dob: z.string().datetime(),
+  Role: z.enum(["Teacher", "Student", "Staff"]),
+});
 
-export type Role = "Teacher" | "Admin" | "Staff" | "Student";
+export type UserMetadata = z.infer<typeof MetaDataType>;
 
 export const defaultAppData: AppDataInterface = {
   NavItems: [],
 };
 
-export const defaultRegestrationType: Role = "Student";
+export const defaultRegestrationType: UserMetadata["Role"] = "Student";
 
 export type RegertrationError = {
-  name: Name | undefined;
+  name: UserMetadata["Name"] | undefined;
   password: string | undefined;
   email: string | undefined;
 };
@@ -40,7 +41,7 @@ export type NavItem = {
   Url: string;
   Name: string;
   params?: string[];
-  init?: Function;
+  RolesPermited: UserMetadata["Role"][];
 };
 
 export type NavItemsInterface = NavItem[];
