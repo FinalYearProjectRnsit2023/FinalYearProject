@@ -13,6 +13,7 @@ specifiers:
   react-router-dom: ^6.8.1
   typescript: ^4.9.3
   vite: ^4.1.0
+  zod: ^3.21.4
 
 dependencies:
   '@supabase/supabase-js': 2.8.0
@@ -21,6 +22,7 @@ dependencies:
   react-bootstrap: 2.7.2_zula6vjvt3wdocc4mwcxqa6nzi
   react-dom: 18.2.0_react@18.2.0
   react-router-dom: 6.8.1_biqbaboplfbrettd7655fr4n2y
+  zod: 3.21.4
 
 devDependencies:
   '@types/node': 18.13.0
@@ -976,4 +978,8 @@ packages:
   /yaeti/0.0.6:
     resolution: {integrity: sha512-MvQa//+KcZCUkBTIC9blM+CU9J2GzuTytsOUwf2lidtvkx/6gnEp1QvJv34t9vdjhFmha/mUiNDbN0D0mJWdug==}
     engines: {node: '>=0.10.32'}
+    dev: false
+
+  /zod/3.21.4:
+    resolution: {integrity: sha512-m46AKbrzKVzOzs/DZgVnG5H55N1sv1M8qZU3A8RIKbs3mrACDNeIOeilDymVb2HdmP8uwshOCF4uJ8uM9rCqJw==}
     dev: false

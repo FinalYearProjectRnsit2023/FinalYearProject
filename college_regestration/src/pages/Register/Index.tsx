@@ -141,30 +141,43 @@ function Register() {
       }
     );
 
-    const { data, error } = await supabase.auth.admin.createUser({
-      email,
-      password,
-      user_metadata: metadata,
+    const regesterCall = await fetch("http://localhost:6969/regester", {
+      method: "POST",
+      body: JSON.stringify({
+        email,
+        password,
+        metadata,
+      }),
+      headers: new Headers({ "Content-Type": "application/json" }),
     });
 
-    // const { data, error } = await supabase.auth.signUp({
-    //   email,
-    //   password,
-    //   options: {
-    //     data: {
-    //       firstName,
-    //       middleName,
-    //       lastName,
-    //       dob,
-    //     },
-    //   },
-    // });
+    const regesterRes = await regesterCall.json();
 
-    if (data) {
-      history.back();
+    console.log({ regesterRes });
+
+    {
+      // const { data, error } = await supabase.auth.admin.createUser({
+      //   email,
+      //   password,
+      //   user_metadata: metadata,
+      // });
+      // const { data, error } = await supabase.auth.signUp({
+      //   email,
+      //   password,
+      //   options: {
+      //     data: {
+      //       firstName,
+      //       middleName,
+      //       lastName,
+      //       dob,
+      //     },
+      //   },
+      // });
+      // if (data) {
+      //   history.back();
+      // }
+      // console.log({ data, error });
     }
-
-    console.log({ data, error });
   }
 }
 

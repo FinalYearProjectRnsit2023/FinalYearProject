@@ -50,7 +50,7 @@ function NavBar() {
             <li className="nav-item">
               {appData.auth != undefined ? (
                 <Link className="nav-link active" aria-current="page" to="/">
-                  {metaData?.firstName} {metaData?.lastName}
+                  {/* {metaData?.name.firstName} + {metaData?.name.lastName} */}
                 </Link>
               ) : (
                 <Link
