@@ -11,12 +11,7 @@ export class RegesterService {
       email: userInfo.Email,
       password: userInfo.Password,
       email_confirm: true,
-      user_metadata: {
-        FirstName: userInfo.MetaData.FirstName,
-        MiddleName: userInfo.MetaData.MiddleName,
-        LastName: userInfo.MetaData.LastName,
-        Dob: userInfo.MetaData.Dob,
-      },
+      user_metadata: userInfo.MetaData,
     });
 
     return { data, error };

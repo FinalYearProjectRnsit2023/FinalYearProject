@@ -1,10 +1,13 @@
 import { z } from 'zod';
 
-const MetaDataType = z.object({
-  FirstName: z.string(),
-  LastName: z.string(),
-  MiddleName: z.string().optional(),
+export const MetaDataType = z.object({
+  Name: z.object({
+    FirstName: z.string(),
+    LastName: z.string(),
+    MiddleName: z.string().optional(),
+  }),
   Dob: z.string().datetime(),
+  Role: z.enum(['Teacher', 'Student', 'Staff']),
 });
 
 export const UserType = z.object({
