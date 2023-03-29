@@ -7,14 +7,18 @@ export type AppDataInterface = {
   NavItems: NavItemsInterface;
 };
 
+export const NameType = z.object({
+  FirstName: z.string(),
+  LastName: z.string(),
+  MiddleName: z.string().optional(),
+});
+
+export const RoleType = z.enum(["Teacher", "Student", "Staff"]);
+
 export const MetaDataType = z.object({
-  Name: z.object({
-    FirstName: z.string(),
-    LastName: z.string(),
-    MiddleName: z.string().optional(),
-  }),
+  Name: NameType,
   Dob: z.string().datetime(),
-  Role: z.enum(["Teacher", "Student", "Staff"]),
+  Role: RoleType,
 });
 
 export type UserMetadata = z.infer<typeof MetaDataType>;
@@ -23,7 +27,15 @@ export const defaultAppData: AppDataInterface = {
   NavItems: [],
 };
 
-export const defaultRegestrationType: UserMetadata["Role"] = "Student";
+export const defaultRegestrationType = "Student";
+
+export const RegestrationType = z.object({
+  MetaData: MetaDataType,
+  Email: z.string().email(),
+  Password: z.string(),
+});
+
+export type Regestration = z.infer<typeof RegestrationType>;
 
 export type RegertrationError = {
   name: UserMetadata["Name"] | undefined;

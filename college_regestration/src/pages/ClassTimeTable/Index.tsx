@@ -14,8 +14,7 @@
 */
 
 import { useState } from "react";
-import SubjectM from "../../Model/SubjectModel";
-import { UserM } from "../../Model/UserModel";
+import { GetAllTeachers, UserM } from "../../lib/Models/User";
 
 export default function ClassTT() {
   const [showCreateTT, setShowCreateTT] = useState(true);
@@ -93,10 +92,13 @@ export default function ClassTT() {
                       >
                         <option value=""></option>
                         {Teachers.map((teacher) => (
-                          <option value={teacher.id.toString()}>
-                            {teacher.name.firstName +
+                          <option
+                            value={teacher.id.toString()}
+                            key={teacher.id.toString()}
+                          >
+                            {teacher.metadata.Name.FirstName +
                               " " +
-                              teacher.name.lastName}
+                              teacher.metadata.Name.LastName}
                           </option>
                         ))}
                       </select>
@@ -121,10 +123,13 @@ export default function ClassTT() {
                       >
                         <option value=""></option>
                         {Teachers.map((teacher) => (
-                          <option value={teacher.id.toString()}>
-                            {teacher.name.firstName +
+                          <option
+                            value={teacher.id.toString()}
+                            key={teacher.id.toString()}
+                          >
+                            {teacher.metadata.Name.FirstName +
                               " " +
-                              teacher.name.lastName}
+                              teacher.metadata.Name.LastName}
                           </option>
                         ))}
                       </select>
@@ -160,11 +165,11 @@ export default function ClassTT() {
     </div>
   );
 
-  function loadTeachers() {
+  async function loadTeachers() {
     if (!loadingData && Teachers.length == 0) {
       setLoadingData(true);
 
-      console.log("Loading Teachers");
+      SetTeachers(await GetAllTeachers());
 
       setLoadingData(false);
     }

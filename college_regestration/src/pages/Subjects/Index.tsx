@@ -1,5 +1,10 @@
 import { FormEvent, useContext, useEffect, useState } from "react";
 import AppContext from "../../components/context/AppContext";
+import {
+  AddNewSubject,
+  GetAllSubjects,
+  SubjectM,
+} from "../../lib/Models/Subject";
 // import SubjectM from "../../Model/SubjectModel";
 
 function Subject() {
@@ -76,8 +81,8 @@ function Subject() {
             return (
               <tr key={subject.id}>
                 <td>{subject.id}</td>
-                <td>{subject.name}</td>
-                <td>{subject.credit}</td>
+                <td>{subject.Name}</td>
+                <td>{subject.Credit}</td>
               </tr>
             );
           })}
@@ -94,7 +99,7 @@ function Subject() {
     if (appData) {
     }
     try {
-      const subjects = await SubjectM.getAllSubjects();
+      const subjects = await GetAllSubjects();
       if (subjects) {
         setSubjectData(subjects);
         console.log({ subjectData });
@@ -118,11 +123,11 @@ function Subject() {
 
     console.log({ subjectId, subjectName, subjectCredit });
     try {
-      const subject = await SubjectM.addNewSubject(
-        subjectId,
-        subjectName,
-        subjectCredit
-      );
+      const subject = await AddNewSubject({
+        id: subjectId,
+        Name: subjectName,
+        Credit: subjectCredit,
+      });
 
       if (subject) {
         setSubjectData((prev) => [...prev, subject]);
