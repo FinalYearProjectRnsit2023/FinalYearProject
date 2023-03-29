@@ -24,7 +24,6 @@ export class AppService {
   }
 
   getSupabase() {
-    this.supabase.auth.admin;
     return this.supabase;
   }
 }
