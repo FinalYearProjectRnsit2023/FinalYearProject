@@ -43,14 +43,24 @@ class _LoginPageState extends State<LoginPage> {
 
       setState(() {});
 
-      Future.delayed(const Duration(seconds: 2), () {
-        isLoading = false;
-        setState(() {});
+      if (client.session != null){
+
+        if (client.userMetadata.Role == "Staff"){
+          final client = Supabase.instance.client;
+          await client.auth.signOut();
+          print("Staff signedout");
+          isLoading = false;
+        }
+
+        // setState(() {
+        //   const HomePage();
+        //   isLoading = false;
+        // });
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => const HomePage()),
         );
-      });
+      }
     }
   }
 

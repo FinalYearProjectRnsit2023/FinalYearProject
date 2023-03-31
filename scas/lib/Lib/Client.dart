@@ -9,8 +9,11 @@ class Client{
   Client(Session? session,User? user,Map<String, dynamic>? userMetadata){
     this.session=session;
     this.user=user;
-    this.userMetadata=UserMetadata(userMetadata!);
-    
+    if (userMetadata != null){
+      this.userMetadata=UserMetadata(userMetadata!);
+
+    }
+
     print(user?.id);
 
   }

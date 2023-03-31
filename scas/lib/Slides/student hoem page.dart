@@ -7,6 +7,7 @@ class StudentHomepage extends StatelessWidget {
     final client = Supabase.instance.client;
     await client.auth.signOut();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
