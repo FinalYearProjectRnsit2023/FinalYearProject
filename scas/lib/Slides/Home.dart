@@ -49,13 +49,12 @@ class _HomePageState extends State<HomePage>{
   }
 
   switch(client.userMetadata.Role){
-    case "Student":return Text("student");
-    case "Teacher":return Text('Teacher');
-    case "Staff":{
+    case "Student":return StudentHomepage();
+    case "Teacher":
       return TeacherHomePage();
-    };
     default:return Text("error");
   }
+
    return Text("home");
   }
 }

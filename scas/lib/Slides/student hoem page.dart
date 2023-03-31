@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:scas/Slides/Login.dart';
 import 'package:scas/Slides/student%20attendance.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 class StudentHomepage extends StatelessWidget {
+  Future<void> signOut() async {
+    final client = Supabase.instance.client;
+    await client.auth.signOut();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,7 +39,16 @@ class StudentHomepage extends StatelessWidget {
 
 
           ],
-        )
+        ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          await signOut(); // Call your sign-out function here
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => LoginPage()));
+        },
+        child: Icon(Icons.logout_rounded),
+        backgroundColor: Colors.green,
+      ),
 
 
     );

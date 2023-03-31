@@ -12,10 +12,7 @@ class StudentPage extends StatefulWidget {
 }
 
 class _StudentPageState extends State<StudentPage>{
-  Future<void> signOut() async {
-    final client = Supabase.instance.client;
-    await client.auth.signOut();
-  }
+
   var codetext=TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -62,15 +59,7 @@ class _StudentPageState extends State<StudentPage>{
 
           ],
         ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          await signOut(); // Call your sign-out function here
-          Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => LoginPage()));
-        },
-        child: Icon(Icons.logout_rounded),
-        backgroundColor: Colors.green,
-      ),
+
     );
 
 
