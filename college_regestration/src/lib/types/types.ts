@@ -1,5 +1,5 @@
 import { Session } from "@supabase/supabase-js";
-import { z } from "zod";
+import { union, z } from "zod";
 
 export type AppDataInterface = {
   auth?: Session;
@@ -58,41 +58,17 @@ export type NavItem = {
 
 export type NavItemsInterface = NavItem[];
 
-export type WeekDayTime = {
-  Day: 1 | 2 | 3 | 4 | 5 | 6 | 7;
-  Time: Date;
-};
+export const Days = [
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+] as const;
 
-export function getWeekDateTime(day: string, time: Date | string): WeekDayTime {
-  if (typeof time == "string") {
-    time = new Date(time);
-  }
-  let dayNum = 0;
-  switch (day) {
-    case "Monday":
-      dayNum = 1;
-      break;
-    case "Tuesday":
-      dayNum = 2;
-      break;
-    case "Wednsday":
-      dayNum = 3;
-      break;
-    case "Thrusday":
-      dayNum = 4;
-      break;
-    case "Friday":
-      dayNum = 5;
-      break;
-    case "Saturday":
-      dayNum = 6;
-      break;
-    case "Sunday":
-      dayNum = 7;
-      break;
-    default:
-      throw new Error("");
-      break;
-  }
-  return { Day: dayNum as any, Time: time };
+export type DaysType = typeof Days[number];
+
+export function GetWeekDayNumber(Day: DaysType): number {
+  return Days.indexOf(Day);
 }

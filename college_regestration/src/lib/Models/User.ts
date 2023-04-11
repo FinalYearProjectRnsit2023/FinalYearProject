@@ -42,6 +42,11 @@ export async function GetAllTeachers(): Promise<UserM[]> {
     .select("*")
     .filter("id", "in", ids);
 
+  var { data, error } = await supabase
+    .from("User")
+    .select("*")
+    .filter("id", "eq", "");
+
   if (error) {
     console.error({ error });
     throw error;
