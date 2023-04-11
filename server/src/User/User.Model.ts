@@ -25,3 +25,16 @@ export const RegesterUserType = z.object({
 });
 
 export type RegesterUser = z.infer<typeof RegesterUserType>;
+
+export const UUIDType = z.object({
+  Id: z.string().uuid(),
+});
+
+export type UUID = z.infer<typeof UUIDType>;
+
+export const StudentAttCodeType = z.object({
+  Id: z.string().uuid(),
+  Code: z.number(),
+});
+
+export type StudentAttCode = z.infer<typeof StudentAttCodeType>;
