@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:scas/Lib/Client.dart';
+import 'package:scas/Slides/Home.dart';
 import 'package:scas/Slides/Login.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -7,7 +9,8 @@ Future<void> main() async{
   runApp(const MyApp());
 }
 
-final supabase=Supabase.instance.client;
+final SupabaseClient supabase=Supabase.instance.client;
+Client client = Client(supabase.auth.currentSession, supabase.auth.currentUser, supabase.auth.currentUser?.userMetadata  );
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -16,7 +19,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: LoginPage(),
+      home: HomePage(),
     );
   }
 }
