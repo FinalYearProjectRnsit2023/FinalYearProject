@@ -1,6 +1,8 @@
 
 import 'package:flutter/material.dart';
+import 'package:scas/Lib/Api.dart';
 import 'package:scas/Slides/Login.dart';
+import 'package:scas/Slides/code%20display.dart';
 import 'package:scas/Slides/teacherMakingAtt.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 class TeacherHomePage extends StatelessWidget {
@@ -8,6 +10,7 @@ class TeacherHomePage extends StatelessWidget {
     final client = Supabase.instance.client;
     await client.auth.signOut();
   }
+  List<dynamic> users=[];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,7 +22,12 @@ class TeacherHomePage extends StatelessWidget {
         children: <Widget>[
           Center(
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () async {
+                print('tets');
+                var code = await Api.Post(Api.Baseurl + "attdence/create_code" , {"Id": Supabase.instance.client.auth.currentUser?.id});
+                print(code["Code"]);
+                Navigator.push(context, MaterialPageRoute(builder: (context) => DisplayCode(Code: code["Code"].toString())));
+              },
               child: Text(' Take Attendance'),
             ),
           ),

@@ -1,12 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:scas/Lib/Api.dart';
+import 'package:scas/Lib/ApiResult.dart';
 import 'package:scas/Slides/Login.dart';
 import 'package:scas/Slides/TeacherHomepage.dart';
 import 'package:scas/Slides/student%20hoem%20page.dart';
 
 import 'package:scas/main.dart';
 
-//
+
 // class apiResult<type>{
 //   late type Data;
 //   late String error;
@@ -20,14 +22,15 @@ import 'package:scas/main.dart';
 //   late String name;
 //
 // }
-// class user1{
-//   late String xyz;
-//   late String name;
-//
-// }
+class user1{
+  late String xyz;
+  late String name;
+
+}
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
   // static apiResult<user1> res= apiResult();
+  // static ApiResult<user1> res = Api.Get() as ApiResult<user1>;
 
 
   @override
