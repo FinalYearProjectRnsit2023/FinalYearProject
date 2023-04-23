@@ -4,7 +4,8 @@ import 'package:scas/Lib/Api.dart';
 import 'package:scas/Lib/ApiResult.dart';
 import 'package:scas/Slides/Login.dart';
 import 'package:scas/Slides/TeacherHomepage.dart';
-import 'package:scas/Slides/student%20hoem%20page.dart';
+
+import 'package:scas/Slides/studentHomePage.dart';
 
 import 'package:scas/main.dart';
 
@@ -50,7 +51,7 @@ class _HomePageState extends State<HomePage>{
     );
     return Text('');
   }
-
+  print('######################################');
   switch(client.userMetadata.Role){
     case "Student":return StudentHomepage();
     case "Teacher":

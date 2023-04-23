@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class DisplayCode extends StatelessWidget {
- late String Code;
+class DisplayStudentAtt extends StatelessWidget {
+  late String AttCount;
 
- DisplayCode({required this.Code});
+  DisplayStudentAtt({required this.AttCount});
 
 
 
@@ -13,11 +13,11 @@ class DisplayCode extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xff8e6eec),
-        title: Text('CODE'),
+        title: Text('Student Attendnace'),
       ),
-        body: Center(
-        child: Text(Code),
-        ),
+      body: Center(
+        child: Text(AttCount),
+      ),
     );
   }
 }

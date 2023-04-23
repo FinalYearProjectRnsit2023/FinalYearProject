@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:scas/Lib/Api.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 class TeacherPage extends StatefulWidget {
   const TeacherPage({super.key});
   // static apiResult<user1> res= apiResult();
@@ -9,6 +11,7 @@ class TeacherPage extends StatefulWidget {
 }
 
 class _TeacherPageState extends State<TeacherPage>{
+  var studentusn=TextEditingController();
 
 @override
 Widget build(BuildContext context) {
@@ -21,8 +24,7 @@ Widget build(BuildContext context) {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           TextFormField(
-
-
+            controller: studentusn,
             style: const TextStyle(color: Colors.white),
             decoration: InputDecoration(
                 filled: true,
@@ -43,7 +45,12 @@ Widget build(BuildContext context) {
           Center(
             child: ElevatedButton(style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.purpleAccent.shade400),
-              onPressed: () {},
+              onPressed: () async{
+                var code = await Api.Post(Api.Baseurl + "" , {
+                  "Id": Supabase.instance.client.auth.currentUser?.id,
+                  "Usn":studentusn,
+                });
+              },
               child: Text('submit'),
 
             ),

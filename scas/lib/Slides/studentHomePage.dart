@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:scas/Lib/Api.dart';
 import 'package:scas/Slides/Login.dart';
 import 'package:scas/Slides/student%20attendance.dart';
+import 'package:scas/Slides/studentViewAttd.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:scas/Slides/studentViewAttd.dart';
 class StudentHomepage extends StatelessWidget {
   Future<void> signOut() async {
     final client = Supabase.instance.client;
@@ -13,13 +16,14 @@ class StudentHomepage extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
             backgroundColor: Color(0xff8e6eec),
-            title: const Text(' Student Homepage')
+            title: const Text(' Student HomePage')
         ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Center(
-              child: ElevatedButton(
+              child: ElevatedButton(style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.purpleAccent.shade400),
                 onPressed: () {
                   Navigator.push(
                     context,
@@ -32,9 +36,15 @@ class StudentHomepage extends StatelessWidget {
             ),
             SizedBox(height: 10), // Add some space between the buttons
             Center(
-              child: ElevatedButton(
-                onPressed: () {},
-                child: Text('Time Table'),
+              child: ElevatedButton(style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.purpleAccent.shade400),
+                onPressed: () {
+                var Id=Supabase.instance.client.auth.currentUser?.id;
+                var attendance= Api.Get(Api.Baseurl + "" + "?Id="+Id!);
+                Navigator.push(context, MaterialPageRoute(builder: (context) => DisplayStudentAtt(AttCount: attendance["AttCount"])));
+
+                },
+                child: Text('View Attendnace'),
               ),
             ),
 
