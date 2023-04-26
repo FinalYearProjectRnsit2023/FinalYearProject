@@ -780,35 +780,39 @@ class PyFingerprint(object):
             Exception: if any error occurs
         """
 
-        packetPayload = (
-            FINGERPRINT_READIMAGE,
-        )
+        testCount = 0
 
-        self.__writePacket(FINGERPRINT_COMMANDPACKET, packetPayload)
-        receivedPacket = self.__readPacket()
+        for count in range(2):
+            packetPayload = (
+                FINGERPRINT_READIMAGE,
+            )
 
-        receivedPacketType = receivedPacket[0]
-        receivedPacketPayload = receivedPacket[1]
+            self.__writePacket(FINGERPRINT_COMMANDPACKET, packetPayload)
+            receivedPacket = self.__readPacket()
 
-        if ( receivedPacketType != FINGERPRINT_ACKPACKET ):
-            raise Exception('The received packet is no ack packet!')
+            receivedPacketType = receivedPacket[0]
+            receivedPacketPayload = receivedPacket[1]
 
-        ## DEBUG: Image read successful
-        if ( receivedPacketPayload[0] == FINGERPRINT_OK ):
-            return True
+            if ( receivedPacketType != FINGERPRINT_ACKPACKET ):
+                raise Exception('The received packet is no ack packet!')
 
-        elif ( receivedPacketPayload[0] == FINGERPRINT_ERROR_COMMUNICATION ):
-            raise Exception('Communication error')
+            ## DEBUG: Image read successful
+            if ( receivedPacketPayload[0] == FINGERPRINT_OK ):
+                return True
 
-        ## DEBUG: No finger found
-        elif ( receivedPacketPayload[0] == FINGERPRINT_ERROR_NOFINGER ):
-            return False
+            elif ( receivedPacketPayload[0] == FINGERPRINT_ERROR_COMMUNICATION ):
+                raise Exception('Communication error')
 
-        elif ( receivedPacketPayload[0] == FINGERPRINT_ERROR_READIMAGE ):
-            raise Exception('Could not read image')
+            ## DEBUG: No finger found
+            elif ( receivedPacketPayload[0] == FINGERPRINT_ERROR_NOFINGER ):
+                return False
 
-        else:
-            raise Exception('Unknown error '+ hex(receivedPacketPayload[0]))
+            elif ( receivedPacketPayload[0] == FINGERPRINT_ERROR_READIMAGE ):
+                raise Exception('Could not read image')
+
+            else:
+                raise Exception('Unknown error '+ hex(receivedPacketPayload[0]))
+    
 
     ## TODO:
     ## Implementation of uploadImage()

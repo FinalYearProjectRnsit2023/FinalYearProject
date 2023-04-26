@@ -7,6 +7,7 @@ dotenv.config();
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.enableCors();
   await app.listen(process.env.PORT);
   console.log(
     `⚡️[server]: Server is running at http://localhost:${process.env.PORT}`,

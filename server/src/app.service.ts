@@ -20,7 +20,7 @@ export class AppService {
   }
 
   getHello() {
-    return {};
+    return { hello: 'world' };
   }
 
   getSupabase() {

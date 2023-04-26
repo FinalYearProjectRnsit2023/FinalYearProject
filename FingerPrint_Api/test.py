@@ -27,6 +27,7 @@ print('Currently used templates: ' + str(f.getTemplateCount()) +'/'+ str(f.getSt
 ## Tries to enroll new finger
 try:
     print('Waiting for finger...')
+    f.setSecurityLevel(5)
 
     ## Wait that finger is read
     while ( f.readImage() == False ):
