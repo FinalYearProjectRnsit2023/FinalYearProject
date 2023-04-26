@@ -3,6 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { UUID } from 'src/User/User.Model';
 import { TimeTable } from './TimeTable.Model';
 import { UserService } from 'src/User/User.service';
+import { ISO_8601 } from 'moment';
 
 @Injectable()
 export class TimeTableService {
@@ -190,7 +191,7 @@ export class TimeTableService {
     // const Time = now.toLocaleTimeString('it-IT');
 
     const Day = weekday[1];
-    const Time = '09:00:00';
+    const Time = '10:00:00';
 
     const ClassPeriod = (await supabase
       .from('ClassPeriods')

@@ -147,4 +147,33 @@ export class UserService {
       };
     }
   }
+
+  async GetUserName(userId: UUID, appService: AppService) {
+    const supabase = appService.getSupabase();
+
+    const User = (await supabase
+      .from('User')
+      .select('metadata')
+      .eq('id', userId.Id)) as {
+      error: any;
+      data: {
+        metadata: {
+          Dob: Date;
+          Name: { FirstName: string; LastName: string };
+          Role: string;
+        };
+      }[];
+    };
+
+    if (User.error) {
+      return { error: User.error };
+    }
+
+    if (User.data.length > 0) {
+      const Name = User.data[0].metadata.Name;
+      return { Name: Name.FirstName + ' ' + Name.LastName };
+    }
+
+    return { error: 'something went wrong' };
+  }
 }
