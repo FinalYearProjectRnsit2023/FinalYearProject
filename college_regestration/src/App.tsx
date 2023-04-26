@@ -11,9 +11,14 @@ import Register from "./pages/Register/Index";
 import AppContext from "./components/context/AppContext";
 import Subject from "./pages/Subjects/Index";
 import ClassTT from "./pages/ClassTimeTable/Index";
+import { UserMetadata } from "./lib/types/types";
 
 function App() {
   const [appData, setAppData] = useContext(AppContext);
+
+  const metaData = appData.auth
+    ? (appData.auth.user.user_metadata as UserMetadata)
+    : undefined;
 
   useEffect(() => {
     console.log("useEffect");
@@ -26,7 +31,11 @@ function App() {
       <div className="appBody">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/Login" element={<Login />} />
+          {appData.auth != undefined ? (
+            <></>
+          ) : (
+            <Route path="/Login" element={<Login />} />
+          )}
           <Route path="/Register" element={<Register />} />
           <Route path="/Subject" element={<Subject />} />
           <Route path="/TimeTable" element={<ClassTT />} />
@@ -40,10 +49,22 @@ function App() {
       return {
         ...prev,
         NavItems: [
-          { Url: "/", Name: "Home" },
-          { Url: "/Register", Name: "Register" },
-          { Url: "/Subject", Name: "Subject" },
-          { Url: "/TimeTable", Name: "TimeTable" },
+          {
+            Url: "/",
+            Name: "Home",
+            RolesPermited: ["Student", "Teacher", "Staff"],
+          },
+          { Url: "/Register", Name: "Register", RolesPermited: ["Staff"] },
+          {
+            Url: "/Subject",
+            Name: "Subject",
+            RolesPermited: ["Student", "Teacher", "Staff"],
+          },
+          {
+            Url: "/TimeTable",
+            Name: "TimeTable",
+            RolesPermited: ["Student", "Teacher", "Staff"],
+          },
         ],
       };
     });

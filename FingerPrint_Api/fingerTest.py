@@ -33,7 +33,10 @@ try:
     print("fingerprint read")
     print("saving fingerprint")
     
-    f.downloadImage("./img/test.png")
+    # f.downloadImage("./img/test.png")
+
+    # 
+    f.clearDatabase()
 
 
 except Exception as e:

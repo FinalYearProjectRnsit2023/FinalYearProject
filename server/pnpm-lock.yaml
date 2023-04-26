@@ -19,6 +19,7 @@ specifiers:
   eslint-config-prettier: ^8.3.0
   eslint-plugin-prettier: ^4.0.0
   jest: 29.3.1
+  moment: ^2.29.4
   prettier: ^2.3.2
   reflect-metadata: ^0.1.13
   rxjs: ^7.2.0
@@ -37,6 +38,7 @@ dependencies:
   '@nestjs/platform-express': 9.3.10_7ftkheainf6elxr73aabueoaxm
   '@supabase/supabase-js': 2.11.0
   dotenv: 16.0.3
+  moment: 2.29.4
   reflect-metadata: 0.1.13
   rxjs: 7.8.0
   zod: 3.21.4
@@ -3866,6 +3868,10 @@ packages:
     hasBin: true
     dependencies:
       minimist: 1.2.8
+
+  /moment/2.29.4:
+    resolution: {integrity: sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==}
+    dev: false
 
   /ms/2.0.0:
     resolution: {integrity: sha512-Tpp60P6IUJDTuOq/5Z8cdskzJujfwqfOTkrwIwj7IRISpnkJnT6SyJ4PCPnGMoFjC9ddhal5KVIYtAt97ix05A==}

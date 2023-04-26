@@ -6,12 +6,11 @@ import AppContext from "../context/AppContext";
 
 function NavBar() {
   const [appData, setAppData] = useContext(AppContext);
-
   console.log({ appData });
 
   const metaData = appData.auth
     ? (appData.auth.user.user_metadata as UserMetadata)
-    : undefined;
+    : null;
 
   console.log({ metaData });
 
@@ -35,7 +34,9 @@ function NavBar() {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav">
             {appData.NavItems.map((NavBarItem) => {
-              return (
+              return NavBarItem.RolesPermited.includes(
+                metaData?.Role as UserMetadata["Role"]
+              ) ? (
                 <li className="nav-item" key={NavBarItem.Url}>
                   <Link
                     className="nav-link active"
@@ -45,12 +46,14 @@ function NavBar() {
                     {NavBarItem.Name}
                   </Link>
                 </li>
+              ) : (
+                <></>
               );
             })}
             <li className="nav-item">
               {appData.auth != undefined ? (
                 <Link className="nav-link active" aria-current="page" to="/">
-                  {/* {metaData?.name.firstName} + {metaData?.name.lastName} */}
+                  {metaData?.Name.FirstName} {metaData?.Name.LastName}
                 </Link>
               ) : (
                 <Link
