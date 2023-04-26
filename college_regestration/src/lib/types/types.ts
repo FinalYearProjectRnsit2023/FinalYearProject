@@ -72,3 +72,11 @@ export type DaysType = typeof Days[number];
 export function GetWeekDayNumber(Day: DaysType): number {
   return Days.indexOf(Day);
 }
+
+export const SelectedSubjectsType = z.object({
+  SubjectId: z.string(),
+  Name: z.string(),
+  NumberOfClasses: z.number(),
+});
+
+export type SelectedSubjectsM = z.infer<typeof SelectedSubjectsType>;
