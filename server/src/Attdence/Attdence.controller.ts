@@ -33,4 +33,23 @@ export class AttdenceController {
       this.timeTableService,
     );
   }
+
+  @Post('mark')
+  async MarkAttdence(@Body('Usn') Usn: string) {
+    return this.attdenceService.MarkAttdenceByUsn(
+      Usn,
+      this.timeTableService,
+      this.userService,
+      this.appService,
+    );
+  }
+
+  @Post('count')
+  async Count(@Body() userId: UUID) {
+    return this.attdenceService.GetAttdence(
+      userId,
+      this.appService,
+      this.userService,
+    );
+  }
 }

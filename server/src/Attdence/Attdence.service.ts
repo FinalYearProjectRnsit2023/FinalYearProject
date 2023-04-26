@@ -4,7 +4,7 @@ import { StudentAttCode, UUID } from 'src/User/User.Model';
 import { UserService } from 'src/User/User.service';
 import { GenerateOTP } from 'src/lib/otp';
 import { TimeTableService } from 'src/TimeTable/TimeTable.service';
-import { ZodNumber } from 'zod';
+import { TypeOf, ZodNumber, object } from 'zod';
 
 @Injectable()
 export class AttdenceService {
@@ -135,8 +135,6 @@ export class AttdenceService {
           { Id: studentAttCode.Id },
           data[0].ClassTTId,
           appService,
-          timeTableService,
-          userService,
         );
         return {
           attdence,
@@ -155,8 +153,6 @@ export class AttdenceService {
     studentId: UUID,
     classTTId: string,
     appService: AppService,
-    timeTableService: TimeTableService,
-    userService: UserService,
   ) {
     const supabase = appService.getSupabase();
 
@@ -250,15 +246,201 @@ export class AttdenceService {
           return { error: 'Sry The class is completed.' };
       }
 
-      const updatedValue = await supabase
+      const updatedValue = (await supabase
         .from('Attdence')
         .update(updateTo)
         .eq('ClassTTId', classTTId)
         .eq('StudentId', studentId.Id)
-        .select('*');
+        .select('m1, m2, m3, m4, m5')) as {
+        error: any;
+        data: { m1: number; m2: number; m3: number; m4: number; m5: number }[];
+      };
 
-      return updatedValue;
+      if (updatedValue.error) {
+        return { error: updatedValue.error };
+      }
+
+      return true;
+
+      // return updatedValue.data;
     }
+    return { error: 'Something went wrong' };
+  }
+
+  async MarkAttdenceByUsn(
+    Usn: string,
+    timeTableService: TimeTableService,
+    userService: UserService,
+    appService: AppService,
+  ) {
+    const supabase = appService.getSupabase();
+
+    const UserMaping = (await supabase
+      .from('UsnMaping')
+      .select('StudentId')
+      .eq('Usn', Usn)) as { error: any; data: { StudentId: string }[] };
+
+    if (UserMaping.error) {
+      return { error: UserMaping.error };
+    }
+
+    // console.log(Usn);
+
+    // return { Usn, UserMaping };
+
+    const classTTId = await timeTableService.GetClassTimeTableId(
+      {
+        Id: UserMaping.data[0].StudentId,
+      },
+      appService,
+      userService,
+    );
+
+    if (classTTId.error) {
+      return { error: classTTId.error };
+    }
+
+    const mark = this.MarkAttdence(
+      { Id: UserMaping.data[0].StudentId },
+      classTTId.id,
+      appService,
+    );
+
+    return mark;
+  }
+
+  async GetAttdence(
+    userId: UUID,
+    appService: AppService,
+    userService: UserService,
+  ) {
+    const subabase = appService.getSupabase();
+
+    const Name = await userService.GetUserName(userId, appService);
+
+    if (Name.error) {
+      return { error: Name.error };
+    }
+
+    const IsTeacher = await userService.IsTeacher(userId, appService);
+
+    if (IsTeacher.error) {
+      return { error: IsTeacher.error };
+    }
+
+    if (IsTeacher.val) {
+      const Login = (await subabase
+        .from('Login')
+        .select('*')
+        .eq('UserId', userId.Id)) as { error: any; data: any[] };
+
+      if (Login.error) {
+        return { error: Login.error };
+      }
+
+      return { name: Name.Name, count: Login.data.length };
+    }
+
+    const IsStudent = await userService.IsStudent(userId, appService);
+
+    if (IsStudent.error) {
+      return { error: IsStudent.error };
+    }
+
+    if (IsStudent.val) {
+      const ClassStudent = (await subabase
+        .from('ClassStudent')
+        .select('ClassId')
+        .eq('StudentId', userId.Id)) as {
+        error: any;
+        data: { ClassId: string }[];
+      };
+
+      if (ClassStudent.error) {
+        return { error: ClassStudent.error };
+      }
+
+      const ClassData = (await subabase
+        .from('Class')
+        .select('TTId')
+        .eq('id', ClassStudent.data[0].ClassId)) as {
+        error: any;
+        data: { TTId: string }[];
+      };
+
+      if (ClassData.error) {
+        return { error: ClassData.error };
+      }
+
+      // return { data: ClassData.data };
+
+      const ClassTT = (await subabase
+        .from('ClassTT')
+        .select('id, SubjectId')
+        .eq('TTId', ClassData.data[0].TTId)) as {
+        error: any;
+        data: { id: string; SubjectId: string }[];
+      };
+
+      if (ClassTT.error) {
+        return { error: ClassTT.error };
+      }
+
+      const Attdence = (await subabase
+        .from('Attdence')
+        .select('ClassTTId, m1, m2, m3, m4, m5')
+        .in(
+          'ClassTTId',
+          ClassTT.data.map((classTT) => {
+            return classTT.id;
+          }),
+        )
+        .eq('StudentId', userId.Id)) as {
+        error: any;
+        data: {
+          ClassTTId: string;
+          m1: number;
+          m2: number;
+          m3: number;
+          m4: number;
+          m5: number;
+        }[];
+      };
+
+      if (Attdence.error) {
+        return { error: Attdence.error };
+      }
+
+      function GetAttdenceCount(ClassTTId: string): {
+        subjectId: string;
+        count: number;
+      } {
+        console.log({ ClassTTId, ClassTT: ClassTT.data });
+        let subjectId = 'hgjhg';
+
+        ClassTT.data.forEach((classtt) => {
+          if (classtt.id == ClassTTId) {
+            console.log({ classtt });
+            subjectId = classtt.SubjectId;
+          }
+        });
+
+        return { subjectId, count: 0 };
+      }
+
+      const attdence = Attdence.data.map((att) => {
+        const attCount = GetAttdenceCount(att.ClassTTId);
+        return attCount.subjectId + ': ' + attCount.count.toString();
+      });
+
+      return {
+        name: Name.Name,
+        attdence: attdence.join(', '),
+      };
+
+      // return { data: ClassTT.data };
+    }
+
     return { error: 'Something went wrong' };
   }
 }

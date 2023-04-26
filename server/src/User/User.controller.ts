@@ -23,4 +23,9 @@ export class UserController {
 
     return this.userService.CheckUserRegister(registerRequest, this.appService);
   }
+
+  @Get()
+  async GetUser(@Body() userId: UUID) {
+    return this.userService.GetUserName(userId, this.appService);
+  }
 }
