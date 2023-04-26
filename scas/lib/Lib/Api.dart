@@ -5,7 +5,7 @@ import 'package:scas/Lib/ApiResult.dart';
 
 class Api{
 
-  static late String Baseurl = "http://localhost:6969/";
+  static late String Baseurl = "http://192.168.1.197:6969/";
 
   static dynamic Get<T>(String url) async {
 
@@ -25,7 +25,7 @@ class Api{
 
 
   static dynamic Post<T>(String url, T body) async {
-    print('this is post test');
+    // print('this is post test');
     // print(jsonEncode(body));
       final response = await http.post(Uri.parse(url),
           body: body

@@ -2,9 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class DisplayTeacherAtt extends StatelessWidget {
-  late String AttCount;
+  late String Name;
+  late int Count;
 
-  DisplayTeacherAtt({required this.AttCount});
+  DisplayTeacherAtt({required this.Count,required this.Name});
 
 
 
@@ -15,8 +16,22 @@ class DisplayTeacherAtt extends StatelessWidget {
         backgroundColor: Color(0xff8e6eec),
         title: Text('Teacher Attendnace'),
       ),
-      body: Center(
-        child: Text(AttCount),
+      body:  Center(
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            // crossAxisAlignment: CrossAxisAlignment.center,
+            children:[
+              Center(
+                child: Row(children:[
+                  Text("Name"),Text("              "),Text(Name)
+                ]),
+              ),
+              Center(
+                child: Row(children:[
+                  Text("Attdence"),Text("              "),Text(Count.toString())
+                ]),
+              ),
+            ]),
       ),
     );
   }

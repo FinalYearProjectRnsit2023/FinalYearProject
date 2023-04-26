@@ -49,10 +49,11 @@ class _StudentPageState extends State<StudentPage>{
               child: ElevatedButton( style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.deepPurple),
                 onPressed: () async {
-                  var code = await Api.Post(Api.Baseurl + "" , {
+                  print(codetext.text);
+                  var attendance = await Api.Post(Api.Baseurl + "attdence/verify_code" , {
                     "Id": Supabase.instance.client.auth.currentUser?.id,
-                    "Code":codetext,
-                  });
+                    "Code":codetext.text,
+                  }); print(attendance);
                 },
                 child: Text('Submit'),
 

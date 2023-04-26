@@ -52,10 +52,16 @@ class TeacherHomePage extends StatelessWidget {
           Center(
             child: ElevatedButton(style: ElevatedButton.styleFrom(
             backgroundColor: Colors.purpleAccent.shade400),
-              onPressed: () {
+              onPressed: () async {
                 var Id=Supabase.instance.client.auth.currentUser?.id;
-                var attendance= Api.Get(Api.Baseurl + "" + "?Id="+Id!);
-                Navigator.push(context, MaterialPageRoute(builder: (context) => DisplayTeacherAtt(AttCount: attendance["AttCount"])));
+                var attendance= await Api.Post(Api.Baseurl + "attdence/count", {"Id": Supabase.instance.client.auth.currentUser?.id});
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => DisplayTeacherAtt(
+                        Count: attendance["count"],
+                      Name:attendance["name"],
+                    )
+                    )
+                );
               },
               child: Text(' View Attendance'),
             ),

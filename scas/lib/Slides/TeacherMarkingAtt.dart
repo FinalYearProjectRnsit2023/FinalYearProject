@@ -46,10 +46,10 @@ Widget build(BuildContext context) {
             child: ElevatedButton(style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.purpleAccent.shade400),
               onPressed: () async{
-                var code = await Api.Post(Api.Baseurl + "" , {
-                  "Id": Supabase.instance.client.auth.currentUser?.id,
-                  "Usn":studentusn,
-                });
+                var attendance = await Api.Post(Api.Baseurl + "attdence/mark" , {
+                  // "Id": Supabase.instance.client.auth.currentUser?.id,
+                  "Usn":studentusn.text,
+                });print(attendance);
               },
               child: Text('submit'),
 
