@@ -415,17 +415,37 @@ export class AttdenceService {
         subjectId: string;
         count: number;
       } {
-        console.log({ ClassTTId, ClassTT: ClassTT.data });
-        let subjectId = 'hgjhg';
+        // console.log({ ClassTTId, ClassTT: ClassTT.data });
+        // let subjectId: string;
 
-        ClassTT.data.forEach((classtt) => {
-          if (classtt.id == ClassTTId) {
-            console.log({ classtt });
-            subjectId = classtt.SubjectId;
+        // ClassTT.data.forEach((classtt) => {
+        //   if (classtt.id == ClassTTId) {
+        //     console.log({ classtt });
+        //     subjectId = classtt.SubjectId;
+        //   }
+        // });
+
+        const subjectId = ClassTT.data.filter(
+          (classtt) => classtt.id == ClassTTId,
+        )[0].SubjectId;
+
+        const { m1, m2, m3, m4, m5 } = Attdence.data.filter(
+          (att) => att.ClassTTId == ClassTTId,
+        )[0];
+
+        const attdence = [m1, m2, m3, m4, m5];
+
+        let count = 0;
+
+        attdence.forEach((mAtt) => {
+          let m = mAtt;
+          while (m > 0) {
+            count += 1 & m;
+            m >>= 1;
           }
         });
 
-        return { subjectId, count: 0 };
+        return { subjectId, count };
       }
 
       const attdence = Attdence.data.map((att) => {
