@@ -267,14 +267,14 @@ export default function ClassTT() {
 
   return (
     <div>
-      <button
+      {/* <button
         className="btn btn-primary"
         onClick={() => {
           setShowCreateTT(false);
         }}
       >
         View TimeTables
-      </button>
+      </button>x  
       <button
         className="btn btn-primary"
         onClick={() => {
@@ -282,7 +282,7 @@ export default function ClassTT() {
         }}
       >
         Create TimeTable
-      </button>
+      </button> */}
       {ShowError && (
         <Alert>
           <Alert.Heading>Error</Alert.Heading>
