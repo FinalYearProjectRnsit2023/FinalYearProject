@@ -54,6 +54,33 @@ class StudentHomepage extends StatelessWidget {
                 child: Text('View Attendnace'),
               ),
             ),
+            Center(
+              child: ElevatedButton(style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.purpleAccent.shade400),
+                onPressed: () async {
+                  var Id=Supabase.instance.client.auth.currentUser?.id;
+                  var attendance= await Api.Post(Api.Baseurl + "Register/fingerVerify", {"Id": Supabase.instance.client.auth.currentUser?.id});
+                  print(attendance);
+                  print(attendance["maxVerf"]);
+                  int mavVerf = int.parse(attendance["maxVerf"].toString());
+                  if (mavVerf > 0){
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text("Verified"),
+                    ));
+                  }else {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text("failed"),
+                    ));
+                  }
+
+
+                },
+                child: Text('verify finger print'),
+              ),
+            ),
+            SizedBox(height: 10),
+
+
 
 
           ],

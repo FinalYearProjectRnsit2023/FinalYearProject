@@ -43,13 +43,10 @@ export default function ClassTT() {
   const [SelectedSubjects, SetSelectedSubjects] = useState(
     [] as SelectedSubjectsM[]
   );
-
   const [Phase1Data, SetPhase1Data] = useState(Phase1Default);
   const [Teachers, SetTeachers] = useState([] as UserM[]);
-
   const [Phase2Data, SetPhase2Data] = useState(Phase2Default as Phase2DefaultT);
   const [Subjects, SetSubjects] = useState([] as SubjectM[]);
-
   const Phase2DataRef = useRef<HTMLTableElement>(null);
   const Phase3DataRef = useRef<HTMLUListElement>(null);
   const [TimeTable, SetTimeTable] = useState(DefTimeTable);
@@ -61,16 +58,13 @@ export default function ClassTT() {
       isPrimary: boolean;
     }[][]
   );
-
   const [Error, SetError] = useState(("" as string) || undefined);
   const [ShowError, SetShowError] = useState(false);
-
   function resetError() {
     console.log("reset");
     SetError(undefined);
     SetShowError(false);
   }
-
   async function loadSubjects() {
     if (!loadingData && Subjects.length == 0) {
       setLoadingData(true);
@@ -80,7 +74,6 @@ export default function ClassTT() {
       setLoadingData(false);
     }
   }
-
   async function savePhase2() {
     resetError();
     console.log("Saving phase 2");
@@ -141,7 +134,6 @@ export default function ClassTT() {
       return timeTable;
     });
   }
-
   async function savePhase1() {
     resetError();
 
@@ -186,7 +178,6 @@ export default function ClassTT() {
       data: true,
     };
   }
-
   async function savePhase3() {
     const listItems = Phase3DataRef.current?.childNodes;
     listItems?.forEach((element) => {
@@ -206,7 +197,6 @@ export default function ClassTT() {
 
     console.log({ TimeTable });
   }
-
   async function loadSubjectTeachers() {
     SetSubjectTeacher([]);
     async function getSubjectTeachers(subjectId: string) {
@@ -236,7 +226,6 @@ export default function ClassTT() {
       });
     });
   }
-
   function getTeacherById(TeacherId: string) {
     // console.log(Teachers, TeacherId);
     const teacher = Teachers.filter((teacher) => {
@@ -247,7 +236,6 @@ export default function ClassTT() {
       teacher?.metadata.Name.FirstName + " " + teacher?.metadata.Name.LastName
     );
   }
-
   async function SubmitData() {
     await savePhase3();
 
@@ -264,7 +252,6 @@ export default function ClassTT() {
 
     console.log(promiseData.data);
   }
-
   return (
     <div>
       {/* <button

@@ -12,6 +12,7 @@ import AppContext from "./components/context/AppContext";
 import Subject from "./pages/Subjects/Index";
 import ClassTT from "./pages/ClassTimeTable/Index";
 import { UserMetadata } from "./lib/types/types";
+import Fingerprint from "./pages/fingerprint";
 
 function App() {
   const [appData, setAppData] = useContext(AppContext);
@@ -39,6 +40,7 @@ function App() {
           <Route path="/Register" element={<Register />} />
           <Route path="/Subject" element={<Subject />} />
           <Route path="/TimeTable" element={<ClassTT />} />
+          <Route path="/Fingerprint" element={<Fingerprint />} />
         </Routes>
       </div>
     </div>

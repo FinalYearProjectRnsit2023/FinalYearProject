@@ -6,6 +6,8 @@ import 'package:scas/Lib/ApiResult.dart';
 class Api{
 
   static late String Baseurl = "http://192.168.29.143:6969/";
+  static late String PBaseurl = "http://192.168.29.143:8080/";
+
 
   static dynamic Get<T>(String url) async {
 

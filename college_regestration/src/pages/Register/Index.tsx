@@ -1,6 +1,8 @@
 import { FormEvent, useState } from "react";
 import { GetAllSubjects, SubjectM } from "../../lib/Models/Subject";
 import supabase from "../../lib/supabase/dbApi";
+import { useNavigate } from "react-router-dom";
+
 import {
   defaultRegertrationError,
   defaultRegestrationType,
@@ -19,6 +21,8 @@ function Register() {
   const [regestrationError, setRegestrationError] = useState(
     defaultRegertrationError
   );
+
+  const navigate = useNavigate();
 
   const teacherForm = (
     <>
@@ -50,70 +54,74 @@ function Register() {
         padding: "0 25%",
       }}
     >
-      <button
-        className="btn btn-primary"
-        onClick={() => SetRegesterFor("Student")}
-      >
-        student
-      </button>
-      <button
-        className="btn btn-primary"
-        onClick={() => SetRegesterFor("Teacher")}
-      >
-        Teacher
-      </button>
-      <button
-        className="btn btn-primary"
-        onClick={() => SetRegesterFor("Staff")}
-      >
-        Staff
-      </button>
+      <div>
+        <button
+          className="btn btn-primary"
+          onClick={() => SetRegesterFor("Student")}
+        >
+          student
+        </button>
+        <button
+          className="btn btn-primary"
+          onClick={() => SetRegesterFor("Teacher")}
+        >
+          Teacher
+        </button>
+        <button
+          className="btn btn-primary"
+          onClick={() => SetRegesterFor("Staff")}
+        >
+          Staff
+        </button>
+      </div>
       <form
         action="POST"
         className="box"
         onSubmit={(event) => RegesterUser(event)}
       >
-        {/* basic info about the student and teachers */}
-        <label htmlFor="firstName">First Name</label>
-        <input type="text" id="firstName" className="form-control" required />
-        <label htmlFor="middleName">Middle Name</label>
-        <input type="text" id="middleName" className="form-control" />
-        <label htmlFor="lastName">Last Name</label>
-        <input type="text" id="lastName" className="form-control" required />
-        <label htmlFor="dob">date Of Birth</label>
-        <input type="date" id="dob" className="form-control" required />
-        {regesterFor == "Teacher" ? (
-          <>
-            <hr />
-            {teacherForm}
-          </>
-        ) : (
-          <></>
-        )}
-        <hr />
-        {/* The email and password for the student and teacher used to login the user */}
-        <label htmlFor="email">Email</label>
-        <input type="email" id="email" className="form-control" />
-        <label htmlFor="password">Password</label>
-        <input
-          type="password"
-          name="password"
-          className="form-control"
-          id="password"
-          required
-        />
-        <label htmlFor="passwordCheck">Verify Password</label>
-        <input
-          type="password"
-          name="verifyPassword"
-          className="form-control"
-          id="passwordCheck"
-          required
-        />
-        <hr />
-        <button type="submit" className="btn btn-primary">
-          Create {regesterFor}
-        </button>
+        <div>
+          {/* basic info about the student and teachers */}
+          <label htmlFor="firstName">First Name</label>
+          <input type="text" id="firstName" className="form-control" required />
+          <label htmlFor="middleName">Middle Name</label>
+          <input type="text" id="middleName" className="form-control" />
+          <label htmlFor="lastName">Last Name</label>
+          <input type="text" id="lastName" className="form-control" required />
+          <label htmlFor="dob">date Of Birth</label>
+          <input type="date" id="dob" className="form-control" required />
+          {regesterFor == "Teacher" ? (
+            <>
+              <hr />
+              {teacherForm}
+            </>
+          ) : (
+            <></>
+          )}
+          <hr />
+          {/* The email and password for the student and teacher used to login the user */}
+          <label htmlFor="email">Email</label>
+          <input type="email" id="email" className="form-control" />
+          <label htmlFor="password">Password</label>
+          <input
+            type="password"
+            name="password"
+            className="form-control"
+            id="password"
+            required
+          />
+          <label htmlFor="passwordCheck">Verify Password</label>
+          <input
+            type="password"
+            name="verifyPassword"
+            className="form-control"
+            id="passwordCheck"
+            required
+          />
+          <hr />
+          <button type="submit" className="btn btn-primary">
+            Create {regesterFor}
+          </button>
+        </div>
       </form>
     </div>
   );
@@ -217,7 +225,7 @@ function Register() {
       const NewUser = regesterRes.regesterReturn.NewUser;
       if (NewUser.status == 201) {
         alert("New User Created");
-        history.back();
+        navigate(`/Fingerprint?id=${regesterRes.regesterReturn.data.user.id}`);
       } else {
         alert("New User Failed to Create, try again after some time");
         history.back();

@@ -1,6 +1,6 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { AppService } from 'src/app.service';
-import { RegesterUserType } from 'src/User/User.Model';
+import { RegesterUserType, UUID, UUIDType } from 'src/User/User.Model';
 import { RegesterService } from './regester.service';
 import { TeacherReg, TeacherRegType } from './Teacher.Model';
 
@@ -38,5 +38,27 @@ export class RegesterController {
       teacherData,
       this.appService,
     );
+  }
+
+  @Post('/fingerReg')
+  async RegisterFingerprint(@Body() uid: UUID) {
+    try {
+      uid = UUIDType.parse(uid);
+    } catch (error) {
+      return { error };
+    }
+
+    return this.regesterService.registerFingerprint(uid, this.appService);
+  }
+
+  @Post('/fingerVerify')
+  async VerifyFingerprint(@Body() uid: UUID) {
+    try {
+      uid = UUIDType.parse(uid);
+    } catch (error) {
+      return { error };
+    }
+
+    return this.regesterService.verifyFingerprint(uid, this.appService);
   }
 }

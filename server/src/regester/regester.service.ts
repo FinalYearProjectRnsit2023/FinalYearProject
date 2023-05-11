@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { AppService } from 'src/app.service';
-import { RegesterUser } from 'src/User/User.Model';
+import { RegesterUser, UUID } from 'src/User/User.Model';
 import { TeacherReg } from './Teacher.Model';
+import axios from 'axios';
 
 @Injectable()
 export class RegesterService {
@@ -83,5 +84,69 @@ export class RegesterService {
     }
 
     return { data };
+  }
+
+  async registerFingerprint(userId: UUID, appService: AppService) {
+    const supabase = appService.getSupabase();
+
+    const fps = await axios({
+      url: `http://127.0.0.1:8000/read?uid=${userId.Id}`,
+      method: 'GET',
+      headers: {
+        // 'Content-Type': 'application/json; charset=UTF-8',
+      },
+    });
+
+    console.log(fps.data);
+    const fingerTemplate = fps.data as number[];
+
+    const { data, error } = (await supabase
+      .from('UserFingerPrint')
+      .insert([{ userId: userId.Id, template: fingerTemplate }])
+      .select('*')) as {
+      error: any;
+      data: { userId: string; template: any }[];
+    };
+
+    if (error) {
+      return { error };
+    }
+
+    return { data };
+  }
+
+  async verifyFingerprint(userId: UUID, appService: AppService) {
+    const supabase = appService.getSupabase();
+
+    const fp = (await supabase
+      .from('UserFingerPrint')
+      .select('*')
+      .eq('userId', userId.Id)) as {
+      error: any;
+      data: {
+        userId: string;
+        template: number[];
+      }[];
+    };
+
+    // return fp.data;
+
+    if (fp.error) {
+      return { error: fp.data };
+    }
+
+    const template = fp.data[0].template;
+
+    const url = `http://127.0.0.1:8000/verify?template=[${template}]`;
+
+    const fps = await axios({
+      url,
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    });
+
+    return fps.data;
   }
 }
