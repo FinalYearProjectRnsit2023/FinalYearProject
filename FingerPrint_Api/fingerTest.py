@@ -7,7 +7,10 @@ from lib.pyfingerprint import FINGERPRINT_CHARBUFFER1
 from lib.pyfingerprint import FINGERPRINT_CHARBUFFER2
 
 from time import gmtime, strftime
+<<<<<<< HEAD
 
+=======
+>>>>>>> eec787821cee7834dd62cad394cb52f2b05e6eee
 
 # Enrolls new finger
 ##
@@ -41,6 +44,7 @@ try:
 
     curTime = strftime("%Y%m%d_%H%M%S", gmtime())
 
+<<<<<<< HEAD
     # f.downloadImage(f"./img/test{curTime}.png")
     f.convertImage(FINGERPRINT_CHARBUFFER1)
     template = f.downloadCharacteristics(FINGERPRINT_CHARBUFFER1)
@@ -63,6 +67,15 @@ try:
         f.convertImage(FINGERPRINT_CHARBUFFER1)
         template = f.downloadCharacteristics(FINGERPRINT_CHARBUFFER1)
         print(template)
+=======
+    f.downloadImage(f"./img/test{curTime}.png")
+    f.convertImage(FINGERPRINT_CHARBUFFER1)
+    template = f.downloadCharacteristics(FINGERPRINT_CHARBUFFER1)
+    f.uploadCharacteristics(FINGERPRINT_CHARBUFFER2, template)
+    template2 = f.downloadCharacteristics(FINGERPRINT_CHARBUFFER2)
+    print(f"template: {template}, template2: {template2}")
+    # tempLoc = f.storeTemplate(FINGERPRINT_CHARBUFFER1)
+>>>>>>> eec787821cee7834dd62cad394cb52f2b05e6eee
 
 
 except Exception as e:

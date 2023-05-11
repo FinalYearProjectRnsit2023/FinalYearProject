@@ -20,11 +20,10 @@ export class AppService {
   }
 
   getHello() {
-    return {};
+    return { hello: 'world' };
   }
 
   getSupabase() {
-    this.supabase.auth.admin;
     return this.supabase;
   }
 }

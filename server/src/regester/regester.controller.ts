@@ -1,9 +1,10 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { AppService } from 'src/app.service';
-import { RegesterUserType } from 'src/User/User.Model';
+import { RegesterUserType, UUID, UUIDType } from 'src/User/User.Model';
 import { RegesterService } from './regester.service';
+import { TeacherReg, TeacherRegType } from './Teacher.Model';
 
-@Controller('Regester')
+@Controller('Register')
 export class RegesterController {
   constructor(
     private readonly regesterService: RegesterService,
@@ -15,14 +16,49 @@ export class RegesterController {
     try {
       UserInfo = RegesterUserType.parse(UserInfo);
     } catch (ex) {
-      console.error({ UserInfo });
+      console.log({ UserInfo });
       return { error: 'Invalid UserInfo', info: ex };
     }
     console.log({ UserInfo });
-    const { data, error } = await this.regesterService.regesterUser(
+    const regesterReturn = await this.regesterService.regesterUser(
       UserInfo,
       this.appService,
     );
-    return { data, error };
+    return { regesterReturn };
+  }
+
+  @Post('Subject')
+  async RegesterTeacherSubjects(@Body() teacherData: TeacherReg) {
+    try {
+      teacherData = TeacherRegType.parse(teacherData);
+    } catch (error) {
+      return { error };
+    }
+    return this.regesterService.registerTeacherSubjects(
+      teacherData,
+      this.appService,
+    );
+  }
+
+  @Post('/fingerReg')
+  async RegisterFingerprint(@Body() uid: UUID) {
+    try {
+      uid = UUIDType.parse(uid);
+    } catch (error) {
+      return { error };
+    }
+
+    return this.regesterService.registerFingerprint(uid, this.appService);
+  }
+
+  @Post('/fingerVerify')
+  async VerifyFingerprint(@Body() uid: UUID) {
+    try {
+      uid = UUIDType.parse(uid);
+    } catch (error) {
+      return { error };
+    }
+
+    return this.regesterService.verifyFingerprint(uid, this.appService);
   }
 }

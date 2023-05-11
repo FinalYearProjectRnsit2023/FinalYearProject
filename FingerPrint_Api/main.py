@@ -14,6 +14,16 @@ from lib.pyfingerprint import FINGERPRINT_CHARBUFFER2
 from time import gmtime, strftime
 
 import fingerprint as fp
+import sys
+
+import time
+from lib.pyfingerprint import PyFingerprint
+from lib.pyfingerprint import FINGERPRINT_CHARBUFFER1
+from lib.pyfingerprint import FINGERPRINT_CHARBUFFER2
+
+from time import gmtime, strftime
+
+import fingerprint as fp
 
 app = FastAPI()
 

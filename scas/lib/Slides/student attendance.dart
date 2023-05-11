@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scas/Lib/Api.dart';
 import 'package:scas/Slides/Login.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -47,9 +48,12 @@ class _StudentPageState extends State<StudentPage>{
             Center(
               child: ElevatedButton( style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.deepPurple),
-                onPressed: ()  {
-                  // http.get(Uri.http('localhost:6969','student/attendance_code'))
-
+                onPressed: () async {
+                  print(codetext.text);
+                  var attendance = await Api.Post(Api.Baseurl + "attdence/verify_code" , {
+                    "Id": Supabase.instance.client.auth.currentUser?.id,
+                    "Code":codetext.text,
+                  }); print(attendance);
                 },
                 child: Text('Submit'),
 
