@@ -4,16 +4,16 @@ from lib.pyfingerprint import FINGERPRINT_CHARBUFFER1
 from lib.pyfingerprint import FINGERPRINT_CHARBUFFER2
 
 
-## Enrolls new finger
+# Enrolls new finger
 ##
 
-## Tries to initialize the sensor
+# Tries to initialize the sensor
 try:
     f = PyFingerprint('/dev/serial0', 57600, 0xFFFFFFFF, 0x00000000)
 
     print("finger print sensor is set")
 
-    if ( f.verifyPassword() == False ):
+    if (f.verifyPassword() == False):
         raise ValueError('The given fingerprint sensor password is wrong!')
 
 except Exception as e:
@@ -21,25 +21,27 @@ except Exception as e:
     print('Exception message: ' + str(e))
     exit(1)
 
-## Gets some sensor information
-print('Currently used templates: ' + str(f.getTemplateCount()) +'/'+ str(f.getStorageCapacity()))
+# Gets some sensor information
+print('Currently used templates: ' + str(f.getTemplateCount()) +
+      '/' + str(f.getStorageCapacity()))
 
-## Tries to enroll new finger
+# Tries to enroll new finger
 try:
     print('Waiting for finger...')
+    f.setSecurityLevel(5)
 
-    ## Wait that finger is read
-    while ( f.readImage() == False ):
+    # Wait that finger is read
+    while (f.readImage() == False):
         pass
 
-    ## Converts read image to characteristics and stores it in charbuffer 1
+    # Converts read image to characteristics and stores it in charbuffer 1
     f.convertImage(FINGERPRINT_CHARBUFFER1)
 
-    ## Checks if finger is already enrolled
+    # Checks if finger is already enrolled
     result = f.searchTemplate()
     positionNumber = result[0]
 
-    if ( positionNumber >= 0 ):
+    if (positionNumber >= 0):
         print('Template already exists at position #' + str(positionNumber))
         exit(0)
 
@@ -48,21 +50,21 @@ try:
 
     print('Waiting for same finger again...')
 
-    ## Wait that finger is read again
-    while ( f.readImage() == False ):
+    # Wait that finger is read again
+    while (f.readImage() == False):
         pass
 
-    ## Converts read image to characteristics and stores it in charbuffer 2
+    # Converts read image to characteristics and stores it in charbuffer 2
     f.convertImage(FINGERPRINT_CHARBUFFER2)
 
-    ## Compares the charbuffers
-    if ( f.compareCharacteristics() == 0 ):
+    # Compares the charbuffers
+    if (f.compareCharacteristics() == 0):
         raise Exception('Fingers do not match')
 
-    ## Creates a template
+    # Creates a template
     f.createTemplate()
 
-    ## Saves template at new position number
+    # Saves template at new position number
     positionNumber = f.storeTemplate()
     print('Finger enrolled successfully!')
     print('New template position #' + str(positionNumber))
