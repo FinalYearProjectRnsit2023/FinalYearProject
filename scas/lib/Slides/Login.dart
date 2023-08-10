@@ -112,7 +112,7 @@ class _LoginPageState extends State<LoginPage> {
                               borderSide: BorderSide.none,
                             ),
                             fillColor: Colors.purpleAccent.shade100,
-                            focusColor: Colors.white),
+                            focusColor: Colors.white)
                       ),
                       const SizedBox(height: 25),
                       TextFormField(

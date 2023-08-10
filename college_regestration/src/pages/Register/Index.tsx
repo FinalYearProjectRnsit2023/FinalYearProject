@@ -87,6 +87,8 @@ function Register() {
           <input type="text" id="middleName" className="form-control" />
           <label htmlFor="lastName">Last Name</label>
           <input type="text" id="lastName" className="form-control" required />
+          <label htmlFor="adress">addr</label>
+          <input type="text" id="adress" className="form-control" required />
           <label htmlFor="dob">date Of Birth</label>
           <input type="date" id="dob" className="form-control" required />
           {regesterFor == "Teacher" ? (

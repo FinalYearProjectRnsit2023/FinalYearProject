@@ -43,7 +43,7 @@ function Subject() {
           <button className="btn btn-primary">Add Subject</button>
         </form>
         <hr />
-        <button className="btn btn-primary" onClick={() => toggelForm()}>
+        <button className="btn btn-danger" onClick={() => toggelForm()}>
           close
         </button>
       </div>

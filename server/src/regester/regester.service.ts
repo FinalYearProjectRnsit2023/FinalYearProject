@@ -116,6 +116,7 @@ export class RegesterService {
   }
 
   async verifyFingerprint(userId: UUID, appService: AppService) {
+    console.log('verifyFingerprint');
     const supabase = appService.getSupabase();
 
     const fp = (await supabase

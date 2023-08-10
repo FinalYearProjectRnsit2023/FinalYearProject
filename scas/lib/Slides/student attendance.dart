@@ -54,6 +54,12 @@ class _StudentPageState extends State<StudentPage>{
                     "Id": Supabase.instance.client.auth.currentUser?.id,
                     "Code":codetext.text,
                   }); print(attendance);
+                  bool attendanceMarked = attendance["attdence"].toString() == "true";
+                  if (attendanceMarked){
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      content: Text("attendance marked"),
+                    ));
+                  }
                 },
                 child: Text('Submit'),
 

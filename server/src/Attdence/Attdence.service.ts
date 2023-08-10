@@ -44,7 +44,7 @@ export class AttdenceService {
             // TTL => Time To Live
             // 1_20_000 ms => 2 minutes
             // 0 => manual cleanup, for testing
-            TTL: 0,
+            TTL: 1_20_000,
           },
         ])
         .select()) as {
